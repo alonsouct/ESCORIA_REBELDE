@@ -12,6 +12,9 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+
+      // direccion de componente puede ser component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      // como importantdo, el componente y luego definiendolo
     },
     {
       path: '/about',
