@@ -5,14 +5,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    arq: {
-      "id": "",
-      "title": ""
-    }
+    arrayNodes: [],
+    metadata: {
+      "name":"demo",
+      "author":"hizzgdev@163.com",
+      "version":"0.2",
+    },
+    arqdata: [{}]
   },
   mutations: {
+    constructArray: function(state, pl){
+      this.state.arrayNodes.push(pl.inf)
+    },
     constructArquetype: function(state, pl){
-      this.state.arq = { "id": pl.id, "title": pl.title}
+      this.state.arqdata = [{ "id": pl.id, "isroot": true, "topic": pl.topic}]
     }
   },
   actions: {
