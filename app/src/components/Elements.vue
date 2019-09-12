@@ -35,36 +35,60 @@ import jsMind from 'jsmind'
 
 export default {
     name: 'Elements',
+    data: {
+        jm:  null
+    },
     methods: {
         ...mapMutations(['constructArquetype']),
         ...mapMutations(['constructArray']),
-        loadMindmap: function(meta, data){
-            var mind = {
-                "meta": meta,
-                "format":"node_array",
-                "data": data
-            };
+        createMindmap: function(){
             var options = {
                 container:'jsmind_container',
                 editable:true,
                 theme:'primary'
             }
-            var jm = jsMind.show(options, mind);
+            var mind = {
+                "meta": {
+                    "name":"demo",
+                    "author":"hizzgdev@163.com",
+                    "version":"0.2",
+                },
+                "format":"node_array",
+                "data": [{ "id": "root", "isroot": true, "topic": "XD"}]
+            }
+        this.jm = jsMind.show(options, mind)
+        return jm
+        },
+        loadMindmap: function(meta, data){
+            var mind = {
+                "meta": meta,
+                "format":"node_array",
+                "data": data
+            }
             // jm.set_readonly(true);
             // var mind_data = jm.get_data();
             // alert(mind_data);
-            jm.add_node("root","son", "new node", {"background-color":"red"});
+            
             // jm.set_node_color('sub21', 'green', '#ccc');
         },
         nodeHandler: function(param){
+            if(this.jm == null){
+                this.constructArray({inf: param})
+                this.createMindmap()
+            }else{
+                this.jm.add_node("root","son", "new node", {"background-color":"red"})
+            }
             this.constructArray({inf: param})
-            this.constructArquetype({id: "root", topic: param})
-            this.loadMindmap(this.metadata, this.arqdata)
+            //this.constructArquetype({id: "root", topic: param})
+            //var mind = this.loadMindmap(this.metadata, this.arqdata)
+            //var jm = jsMind.show(mind);
         }
     },computed: {
         ...mapState(['arrayNodes']),
         ...mapState(['arqdata']),
         ...mapState(['metadata'])
+    },mounted() {
+        //this.jm = this.createMindmap()
     }
 }
 </script>
