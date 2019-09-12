@@ -23,6 +23,7 @@
                 <b-button @click="nodeHandler('INFO6')">Sexto elemento</b-button>
             </b-collapse>
         </b-list-group>
+        <b-button @click="deleteNode()">Borrar elemento</b-button>
     </b-col>
 </template>
 
@@ -35,60 +36,50 @@ import jsMind from 'jsmind'
 
 export default {
     name: 'Elements',
-    data: {
-        jm:  null
-    },
+    MapInstance: null,
     methods: {
         ...mapMutations(['constructArquetype']),
         ...mapMutations(['constructArray']),
-        createMindmap: function(){
+        createMindmap: function(metadata, arqdata){
             var options = {
                 container:'jsmind_container',
                 editable:true,
                 theme:'primary'
             }
             var mind = {
-                "meta": {
-                    "name":"demo",
-                    "author":"hizzgdev@163.com",
-                    "version":"0.2",
-                },
+                "meta": metadata,
                 "format":"node_array",
-                "data": [{ "id": "root", "isroot": true, "topic": "XD"}]
+                "data": arqdata
             }
-        this.jm = jsMind.show(options, mind)
-        return jm
-        },
-        loadMindmap: function(meta, data){
-            var mind = {
-                "meta": meta,
-                "format":"node_array",
-                "data": data
-            }
-            // jm.set_readonly(true);
-            // var mind_data = jm.get_data();
-            // alert(mind_data);
-            
-            // jm.set_node_color('sub21', 'green', '#ccc');
+        this.MapInstance = jsMind.show(options, mind)
         },
         nodeHandler: function(param){
-            if(this.jm == null){
-                this.constructArray({inf: param})
-                this.createMindmap()
+            if(this.MapInstance == null){
+                this.constructArquetype({topic: param})
+                this.createMindmap(this.metadata, this.arqdata)
             }else{
-                this.jm.add_node("root","son", "new node", {"background-color":"red"})
+                this.addNode(param)
             }
             this.constructArray({inf: param})
-            //this.constructArquetype({id: "root", topic: param})
-            //var mind = this.loadMindmap(this.metadata, this.arqdata)
-            //var jm = jsMind.show(mind);
+        },
+        addNode: function(param){
+            var selected_node = this.MapInstance.get_selected_node(); // as parent of new node
+            //if(!selected_node){prompt_info('please select a node first.');return;}
+            var nodeid = jsMind.util.uuid.newid();
+            var topic = param;
+            var node = this.MapInstance.add_node(selected_node, nodeid, topic);
+        },
+        deleteNode: function(){
+            var selected_node = this.MapInstance.get_selected_node(); // as parent of new node
+            //if(!selected_id){prompt_info('please select a node first.');return;}
+            this.MapInstance.remove_node(selected_node.id);
         }
     },computed: {
         ...mapState(['arrayNodes']),
         ...mapState(['arqdata']),
         ...mapState(['metadata'])
     },mounted() {
-        //this.jm = this.createMindmap()
+        //this.MapInstance = this.createMindmap()
     }
 }
 </script>

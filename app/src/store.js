@@ -18,7 +18,7 @@ export default new Vuex.Store({
       this.state.arrayNodes.push(pl.inf)
     },
     constructArquetype: function(state, pl){
-      this.state.arqdata = [{ "id": pl.id, "isroot": true, "topic": pl.topic}]
+      this.state.arqdata = [{ "id": "root", "isroot": true, "topic": pl.topic}]
     }
   },
   actions: {
