@@ -14,6 +14,10 @@ import 'bootstrap/dist/css/bootstrap.css'     // Importa estilo para Vue + Boots
 import 'bootstrap-vue/dist/bootstrap-vue.css' //
 import 'jsmind/style/jsmind.css'              // Importa estilo para libreria de MindMaps
 
+import axios from 'axios'
+Vue.prototype.$http = axios
+
+
 Vue.config.productionTip = false
 
 new Vue({

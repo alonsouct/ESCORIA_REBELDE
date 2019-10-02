@@ -3,6 +3,14 @@
     <b-navbar-brand href="#">
       <b-img rounded alt="Logo" src="..\assets\logo.png" height="50" width="50"></b-img>
     </b-navbar-brand>
+                      <div class="container">
+                        <div class="large-12 medium-12 small-12 cell">
+                          <label>File
+                            <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                          </label>
+                            <button v-on:click="submitFile()">Submit</button>
+                        </div>
+                      </div>
     <div>
       <b-form-input value="Filename.json"></b-form-input>
     </div>
@@ -30,6 +38,28 @@
 
 <script>
 export default {
-  name: 'Navbar'
+  name: 'Navbar',
+  data(){
+  return {
+    file: ''
+  }
+},
+  methods:{
+    //XML TO YEISON
+      handleFileUpload(){
+        this.file = this.$refs.file.files[0];
+        const reader = new FileReader()
+        reader.onload = function () {
+        const xml2js = require('xml2js');
+        const xml = reader.result;
+        xml2js.parseString(xml, function (err, result) {
+            console.log(result.root); // Output: Hello world!
+            const json = JSON.stringify(result);
+            console.log(json); // Output: {"root":"Hello world!"}
+        });          
+        }
+        reader.readAsText(this.file)
+      }
+  }
 }
 </script>
