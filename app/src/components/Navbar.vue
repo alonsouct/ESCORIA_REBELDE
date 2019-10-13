@@ -41,24 +41,29 @@ export default {
   name: 'Navbar',
   data(){
   return {
-    file: ''
+    file: '',
+    hola: 'asd'
   }
 },
   methods:{
     //XML TO YEISON
       handleFileUpload(){
         this.file = this.$refs.file.files[0];
-        const reader = new FileReader()
+        var reader = new FileReader()
         reader.onload = function () {
-        const xml2js = require('xml2js');
-        const xml = reader.result;
-        xml2js.parseString(xml, function (err, result) {
-            console.log(result.root); // Output: Hello world!
-            const json = JSON.stringify(result);
-            console.log(json); // Output: {"root":"Hello world!"}
-        });          
+        var xml = reader.result;
+        console.log(xml);
+        //var convert = require('xml-js');
+        //var result1 = convert.xml2json(xml, {compact: true});
+        //var result2 = convert.xml2json(xml, {compact: false});
+        //console.log(result1);        
         }
         reader.readAsText(this.file)
+        //console.log(xml + " asdsda")
+      },
+      submitFile(){
+        var porfis = this.handleFileUpload()
+        console.log("aquita  "+file)
       }
   }
 }
