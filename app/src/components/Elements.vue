@@ -25,6 +25,16 @@
         </b-list-group>
         <b-button @click="deleteNode()">Borrar elemento</b-button>
     </b-col>
+    
+    <!-- <div class="flexbox">
+        <Board id="board-1">
+            <Card id="card-1" draggable="true">
+                <p>Primer elemento</p>
+            </Card>    
+        </Board>
+    </div> -->
+
+
 </template>
 
 <script>
@@ -33,6 +43,9 @@ import { mapMutations } from 'vuex'
 import { mapState } from 'vuex'
 
 import jsMind from 'jsmind'                         // Activacion libreia jsMind
+
+import Board from "./Board"
+import Card from "./Card"
 
 export default {
     name: 'Elements',
