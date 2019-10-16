@@ -1,6 +1,11 @@
 <template>
 <b-col md="9">
-    <div id="jsmind_container">
+    <div 
+      id="jsmind_container"
+      class="board"
+      @dragover.prevent
+      @drop.prevent="drop"
+    >
         
     </div>
     <!-- las llaves permiten instanciar variables o estados de la store
@@ -16,9 +21,18 @@
 
 <script>
 import { mapState } from 'vuex'
+import Elements from "./Elements"
 
 export default {
   name: 'DesignPanel',
+  methods: {
+      drop: e => {
+          const card_id = e.dataTransfer.getData('card_id');
+          const card = document.getElementById(card_id);
+
+          nodeHandler("card.name xD");
+      }
+  },
   computed: {
     ...mapState(['arrayNodes']),
     ...mapState(['arqdata']),

@@ -8,6 +8,7 @@
 <script>
 // @ is an alias to /src
 import Navbar from '@/components/Navbar.vue'      // importacion de componentes
+import Elements from '@/components/Elements.vue'
 
 export default {
   name: 'app',

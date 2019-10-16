@@ -1,5 +1,5 @@
 <template>
-    <b-col md="3">
+    <!-- <b-col md="3">
         <b-list-group>
             <b-list-group-item button v-b-toggle.ele-a.ele-b>Informacion</b-list-group-item>
             <b-collapse id="ele-a">
@@ -24,16 +24,38 @@
             </b-collapse>
         </b-list-group>
         <b-button @click="deleteNode()">Borrar elemento</b-button>
-    </b-col>
-    
-    <!-- <div class="flexbox">
-        <Board id="board-1">
-            <Card id="card-1" draggable="true">
+    </b-col> -->
+    <b-row>
+        <b-col md="3">
+        <div class="flexbox">
+            <Card id="Primer elemento" draggable="true">
                 <p>Primer elemento</p>
-            </Card>    
-        </Board>
-    </div> -->
-
+            </Card>
+            <Card id="Segundo elemento" draggable="true">
+                <p>Segundo elemento</p>
+            </Card>  
+        </div>
+        </b-col>
+        <b-col md="9">
+            <div 
+            id="jsmind_container"
+            class="board"
+            name = "pepito"
+            @dragover.prevent
+            @drop.prevent="nodeHandler()"
+            >
+                
+            </div>
+            <!-- las llaves permiten instanciar variables o estados de la store
+                siempre y cuando estas sean "mapeadas" como se muestra mas abajo
+                para mas informacion revisar States, Mutations y Actions de Vuex
+                en conjunto con el ciclo de vida de aplicacion. Los "..." CREO que
+                son para instanciarlos como texto porque si se llama como mapState
+                simplemente se debe acceder a este como un objeto. De igual forma
+                es solo para revisar y controlar los estados en ejecucion -->
+            <div> {{ arrayNodes }} </div>
+        </b-col>
+    </b-row>    
 
 </template>
 
@@ -44,11 +66,13 @@ import { mapState } from 'vuex'
 
 import jsMind from 'jsmind'                         // Activacion libreia jsMind
 
-import Board from "./Board"
 import Card from "./Card"
 
 export default {
     name: 'Elements',
+    components: {
+        Card
+    },
     MapInstance: null,                              // Crea instancia donde se cargara el MindMap cuando se inicie con un elemento el arquetipo
     methods: {
         ...mapMutations(['constructArquetype']),    // Importa "funciones"/"mutaciones" del store
@@ -92,14 +116,15 @@ export default {
 
         // Por ultimo y solo a forma de control se utiliza la mutacion o funcion que agrega elementos
         // al arreglo de elementos creado en "store"
-        nodeHandler: function(param){
+        nodeHandler: function(){
+            var nodo = document.getElementById("jsmind_container").getAttribute("name")
             if(this.MapInstance == null){
-                this.constructArquetype({topic: param})
+                this.constructArquetype({topic: nodo})
                 this.createMindmap(this.metadata, this.arqdata)
             }else{
-                this.addNode(param)
+                this.addNode(nodo)
             }
-            this.constructArray({inf: param})
+            this.constructArray({inf: nodo})
         },
 
         // Recibe el titulo o topico del elemento al que se le hizo click

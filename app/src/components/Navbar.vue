@@ -52,11 +52,12 @@ export default {
         var reader = new FileReader()
         reader.onload = function () {
         var xml = reader.result;
-        console.log(xml);
-        //var convert = require('xml-js');
-        //var result1 = convert.xml2json(xml, {compact: true});
-        //var result2 = convert.xml2json(xml, {compact: false});
-        //console.log(result1);        
+        // console.log(xml);
+        var convert = require('xml-js');
+        // var result1 = convert.xml2json(xml, {compact: true});
+        var result2 = convert.xml2json(xml, {compact: false});
+        // console.log(result1);
+        console.log(result2);        
         }
         reader.readAsText(this.file)
         //console.log(xml + " asdsda")

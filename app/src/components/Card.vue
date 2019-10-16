@@ -13,14 +13,10 @@
 <script>
 export default {
     props: ['id', 'draggable'],
-    mathods: {
+    methods: {
         dragStart: e => {
             const target = e.target;
-            e.dataTransfer.setData('card_id', target.id);
-
-            setTimeout(() => {
-                target.style.display = "none";
-            }, 0)
+            document.getElementById("jsmind_container").setAttribute("name",target.id)
         }
     }
 }
