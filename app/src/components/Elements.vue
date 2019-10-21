@@ -28,6 +28,7 @@
     <b-row>
         <b-col md="3">
         <div class="flexbox">
+            <b-button @click="Load_arq()">Borrar elemento</b-button>
             <Card id="Primer elemento" draggable="true">
                 <p>Primer elemento</p>
             </Card>
@@ -65,7 +66,6 @@ import { mapMutations } from 'vuex'
 import { mapState } from 'vuex'
 
 import jsMind from 'jsmind'                         // Activacion libreia jsMind
-
 import Card from "./Card"
 
 export default {
@@ -99,6 +99,36 @@ export default {
         // respecto a la libreria, como importar o exportar "arquetipos" o archivos en JSON
         // se puede hacer mediante esta instancia (this.MapInstance) "this" porque se encuentra
         // definido como propiedad de este script o componente.
+        this.MapInstance = jsMind.show(options, mind)
+        },
+        Load_arq: function(){
+        var options = {
+            container:'jsmind_container',
+            editable:true,
+            theme:'primary'
+        }
+        var mind = {
+                "meta":{
+                    "name":"jsMind remote",
+                    "author":"hizzgdev@163.com",
+                    "version":"0.2"
+                },
+                "format":"node_array",
+                "data":[
+                {"id":"root", "isroot":true, "topic":"jsMind"},
+
+                {"id":"sub1", "parentid":"root", "topic":"sub1", "background-color":"#0000ff"},
+                {"id":"sub11", "parentid":"sub1", "topic":"sub11"},
+                {"id":"sub12", "parentid":"sub1", "topic":"sub12"},
+                {"id":"sub13", "parentid":"sub1", "topic":"sub13"},
+
+                {"id":"sub2", "parentid":"root", "topic":"sub2"},
+                {"id":"sub21", "parentid":"sub2", "topic":"sub21"},
+                {"id":"sub22", "parentid":"sub2", "topic":"sub22","foreground-color":"#33ff33"},
+
+                {"id":"sub3", "parentid":"root", "topic":"sub3"},
+            ]
+            }
         this.MapInstance = jsMind.show(options, mind)
         },
         // Funcion que es llamada al hacer click en elementos de la barra lateral

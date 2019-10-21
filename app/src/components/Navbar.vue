@@ -10,6 +10,9 @@
                           </label>
                             <button v-on:click="submitFile()">Submit</button>
                         </div>
+                        <div style="display: none;">
+                          <pre id="xml"></pre>
+                        </div>
                       </div>
     <div>
       <b-form-input value="Filename.json"></b-form-input>
@@ -52,19 +55,19 @@ export default {
         var reader = new FileReader()
         reader.onload = function () {
         var xml = reader.result;
-        // console.log(xml);
-        var convert = require('xml-js');
+        //console.log(xml);
+        document.getElementById("xml").textContent = xml;
+        //var convert = require('xml-js');
         // var result1 = convert.xml2json(xml, {compact: true});
-        var result2 = convert.xml2json(xml, {compact: false});
+        //var result2 = convert.xml2json(xml, {compact: false});
         // console.log(result1);
-        console.log(result2);        
+        //console.log(result2);        
         }
-        reader.readAsText(this.file)
+        reader.readAsText(this.file);
         //console.log(xml + " asdsda")
       },
       submitFile(){
-        var porfis = this.handleFileUpload()
-        console.log("aquita  "+file)
+        console.log(document.getElementById("xml").textContent);
       }
   }
 }
