@@ -1,47 +1,27 @@
+
 <template>
   <div>
-    <input v-model="search" type="search">
-    <input type="button" @click="doSearch" value="Search">
+    <input type="button" @click="tryme" value="Clickeame">
   </div>
 </template>
 
 <script>
-//import router from '../api/connection'
 
 export default {
   name: 'Test',
-  data:{
-    search:'',
-    books:[],
-    relatedBooks:[],
-    searching:false,
-    selectedBook:null
+  data(){
+    return {
+      results: ''
+    }
   },
   methods:{
-    doSearch() {
-      if(this.search === '') return;
-      this.searching = true;
-      this.books = [];
-      this.relatedBooks = [];
-      console.log('search for '+this.search);
-      fetch(`https://openwhisk.ng.bluemix.net/api/v1/web/rcamden%40us.ibm.com_My%20Space/goodreads/search.json?search=${encodeURIComponent(this.search)}`)
+    tryme() {
+      fetch(`http://mcfly.tk:3000`)
       .then(res=>res.json())
       .then(res => {
-        this.searching = false;
-        this.books = res.result;
-        console.log(this.books);
+        this.results = res;
+        console.log(this.results.data.message);
       });
-    },
-    findSimilar(book) {
-      this.selectedBook = book;
-      this.relatedBooks = [];
-      console.log('find books similar to '+book.id);
-      fetch(`https://openwhisk.ng.bluemix.net/api/v1/web/rcamden%40us.ibm.com_My%20Space/goodreads/findSimilar.json?id=${encodeURIComponent(book.id)}`)
-      .then(res=>res.json())
-      .then(res => {
-        this.relatedBooks = res.result;
-      });
-
     }
   }
 }
