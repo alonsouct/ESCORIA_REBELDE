@@ -5,7 +5,6 @@ import './plugins/bootstrap-vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import conn from './connectdb' // importa elemento "conn" del script connectdb.js
 
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
@@ -23,6 +22,5 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
-  conn,                   // importa "conn" a aplicacion
   render: h => h(App)
 }).$mount('#app')

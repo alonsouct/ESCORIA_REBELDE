@@ -1,5 +1,20 @@
 <template>
   <div class="about">
-    <h1>Creado por Matías Bahamonde, Mathias Muñoz y Alonso Salazar</h1>
+    <b-container class="mt-4">
+      <b-row>
+        <Test/>
+      </b-row>
+    </b-container>
   </div>
 </template>
+
+<script>
+import Test from '@/components/Test.vue'
+
+export default {
+  name: 'home',
+  components: {
+    Test
+  },
+}
+</script>

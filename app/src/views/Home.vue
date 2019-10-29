@@ -2,6 +2,7 @@
   <div class="home">
     <b-container class="mt-4">
       <b-row>
+        <div> {{ $route.params.id }}</div>
         <Elements/>
         <!-- <DesignPanel/> -->
       </b-row>
@@ -17,8 +18,8 @@ import Elements from '@/components/Elements.vue'        // Importacion component
 export default {
   name: 'home',
   components: {
-    Elements,                                           // Activacion de componente elements (Barra lateral)
-    // DesignPanel                                         // Activacion de componente designpanel (Contenedor central)
+    Elements,                               // Activacion de componente elements (Barra lateral)
+    // DesignPanel                             // Activacion de componente designpanel (Contenedor central)
   },
 }
 </script>
