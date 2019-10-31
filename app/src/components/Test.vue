@@ -16,11 +16,11 @@ export default {
   },
   methods:{
     tryme() {
-      fetch(`http://mcfly.tk:3000`)
-      .then(res=>res.json())
-      .then(res => {
+      fetch('http://mcfly.tk:3000/archetype')
+        .then(res=>res.json())
+        .then(res => {
         this.results = res;
-        console.log(this.results.data.message);
+        console.log(this.results);
       });
     }
   }

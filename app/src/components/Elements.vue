@@ -1,34 +1,10 @@
 <template>
-    <!-- <b-col md="3">
-        <b-list-group>
-            <b-list-group-item button v-b-toggle.ele-a.ele-b>Informacion</b-list-group-item>
-            <b-collapse id="ele-a">
-                <b-button @click="nodeHandler('INFO1')">Primer elemento</b-button>
-            </b-collapse>
-            <b-collapse id="ele-b">
-                <b-button @click="nodeHandler('INFO2')">Segundo elemento</b-button>
-            </b-collapse>
-            <b-list-group-item button v-b-toggle.ele-c.ele-d>Procedimientos</b-list-group-item>
-            <b-collapse id="ele-c">
-                <b-button @click="nodeHandler('INFO3')">Tercer elemento</b-button>
-            </b-collapse>
-            <b-collapse id="ele-d">
-                <b-button @click="nodeHandler('INFO4')">Cuarto elemento</b-button>
-            </b-collapse>
-            <b-list-group-item button v-b-toggle.ele-e.ele-f>Conclusiones</b-list-group-item>
-            <b-collapse id="ele-e">
-                <b-button @click="nodeHandler('INFO5')">Quinto elemento</b-button>
-            </b-collapse>
-            <b-collapse id="ele-f">
-                <b-button @click="nodeHandler('INFO6')">Sexto elemento</b-button>
-            </b-collapse>
-        </b-list-group>
-        <b-button @click="deleteNode()">Borrar elemento</b-button>
-    </b-col> -->
     <b-row>
         <b-col md="3">
         <div class="flexbox">
-            <b-button @click="Load_arq()">Borrar elemento</b-button>
+            <b-button @click="Load_arq()">Cargar arquetipo</b-button>
+            <b-button @click="Export_arq()">Guardar arquetipo en bd</b-button>
+            <b-button @click="Import_arq()">Cargar arquetipo de bd</b-button>
             <Card id="Primer elemento" draggable="true">
                 <p>Primer elemento</p>
             </Card>
@@ -130,6 +106,38 @@ export default {
             ]
             }
         this.MapInstance = jsMind.show(options, mind)
+        },
+        
+        Export_arq: function(){
+            var mind_data = this.MapInstance.get_data('node_array');
+            //var mind_string = jsMind.util.json.json2string(mind_data);
+            //alert(mind_string);
+            var jsonToAPI = {
+                "data":{mind_data}
+            }
+            fetch('http://mcfly.tk:3000/archetype', {
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify(jsonToAPI), // data can be `string` or {object}!
+            headers:{
+                'Content-Type': 'application/json'
+            }
+            }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => console.log('Success:', response));
+        },
+        Import_arq: function(){
+            fetch('http://mcfly.tk:3000/archetype/5dba3e1c1518ab2c90c090dd')
+                .then(res=>res.json())
+                .then(res => {
+                var jsMindDataFromAPI = res.data.mind_data;
+                var options = {
+                    container:'jsmind_container',
+                    editable:true,
+                    theme:'primary'
+                }
+                this.MapInstance = jsMind.show(options, jsMindDataFromAPI)
+                })
+                .catch(error => alert('ID no encontrada'))
         },
         // Funcion que es llamada al hacer click en elementos de la barra lateral
         // se le pasa el parametro del "topico" o "titulo" del elemento.
