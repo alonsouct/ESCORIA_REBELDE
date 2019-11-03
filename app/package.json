@@ -13,6 +13,7 @@
     "core-js": "^2.6.10",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "file-saver": "^2.0.2",
     "jsmind": "^0.4.6",
     "mongodb": "^3.3.3",
     "mongodb-core": "^3.2.7",

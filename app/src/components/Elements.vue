@@ -5,6 +5,7 @@
             <b-button @click="Load_arq()">Cargar arquetipo</b-button>
             <b-button @click="Export_arq()">Guardar arquetipo en bd</b-button>
             <b-button @click="Import_arq()">Cargar arquetipo de bd</b-button>
+            <b-button @click="save_file()">guardar arquetipo actual</b-button>
             <Card id="Primer elemento" draggable="true">
                 <p>Primer elemento</p>
             </Card>
@@ -107,7 +108,12 @@ export default {
             }
         this.MapInstance = jsMind.show(options, mind)
         },
-        
+        save_file(){
+        var mind_data = this.MapInstance.get_data('node_array');
+        var mind_name = mind_data.meta.name;
+        var mind_str = jsMind.util.json.json2string(mind_data);
+        jsMind.util.file.save(mind_str,'text/jsmind',mind_name+'.jm');
+        },        
         Export_arq: function(){
             var mind_data = this.MapInstance.get_data('node_array');
             //var mind_string = jsMind.util.json.json2string(mind_data);

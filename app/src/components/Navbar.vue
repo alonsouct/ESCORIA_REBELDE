@@ -8,7 +8,7 @@
                           <label>File
                             <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
                           </label>
-                            <button v-on:click="submitFile()">Submit</button>
+                            <button v-on:click="savejson()">Submit</button>
                         </div>
                         <div style="display: none;">
                           <pre id="xml"></pre>
@@ -55,19 +55,20 @@ export default {
         var reader = new FileReader()
         reader.onload = function () {
         var xml = reader.result;
-        //console.log(xml);
-        document.getElementById("xml").textContent = xml;
-        //var convert = require('xml-js');
-        // var result1 = convert.xml2json(xml, {compact: true});
-        //var result2 = convert.xml2json(xml, {compact: false});
-        // console.log(result1);
-        //console.log(result2);        
+        document.getElementById("xml").textContent = xml;        
         }
         reader.readAsText(this.file);
-        //console.log(xml + " asdsda")
       },
       submitFile(){
         console.log(document.getElementById("xml").textContent);
+      },
+      savejson(){
+        var xml = document.getElementById("xml").textContent;
+        var convert = require('xml-js');
+        var result = convert.xml2json(xml, {compact: false,textKey: 'EL TEXTO ES'});
+        var FileSaver = require('file-saver');
+        var blob = new Blob([result], {type: "text/plain;charset=utf-8"});
+        FileSaver.saveAs(blob, "test.txt");
       }
   }
 }
