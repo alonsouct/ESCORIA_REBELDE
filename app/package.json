@@ -11,7 +11,7 @@
     "core-js": "^2.6.5",
     "jsmind": "^0.4.6",
     "mongodb": "^3.3.2",
-    "mongoose": "^5.7.0",
+    "mongoose": "^5.7.5",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"
